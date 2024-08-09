@@ -10,7 +10,6 @@ HOWTOs:
 
 - https://charlesleifer.com/blog/building-markov-chain-irc-bot-python-and-redis/
 
-
 =head2 Themes
 
 =head3 Lightning/Balalaika/Yandere Waifubot
@@ -109,5 +108,11 @@ Basic usage algo:
 - index into hash, rand() index into array to find next one (ending if it's <abend>)
 
 - if it wasn't <abend>, repeat with the new token
+
+=head2 Misc code
+
+Used to clean the test data: C<perl -pe 's/(^\w+:\s|[^\w\s])//g' .\testdata.txt > testdata-clean.txt>
+
+- Discovered some issues with query-replace-regex lol
 
 =cut
