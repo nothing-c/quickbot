@@ -1,0 +1,113 @@
+=pod
+
+=head1 Markov Bot Projects
+
+Markov bot instead of ELIZA clone (easier, faster to create)
+
+HOWTOs:
+
+- https://stackoverflow.com/questions/5306729/how-do-markov-chain-chatbots-work
+
+- https://charlesleifer.com/blog/building-markov-chain-irc-bot-python-and-redis/
+
+
+=head2 Themes
+
+=head3 Lightning/Balalaika/Yandere Waifubot
+
+- Lightning:
+
+  - https://finalfantasy.fandom.com/wiki/Lightning_Returns:_Final_Fantasy_XIII_script
+
+  - http://ffxiiitranscript.blogspot.com/
+
+- Balalaika:
+
+  - https://www.opensubtitles.org/en/search2/sublanguageid-all/moviename-black+lagoon+
+
+  - https://www.quotes.net/movies/black_lagoon_100757
+
+  - https://tvtropes.org/pmwiki/pmwiki.php/Quotes/BlackLagoon
+
+  - https://www.imdb.com/title/tt0962826/quotes/
+
+  - https://duckduckgo.com/?q=black+lagoon+balalaika+quotes+imdb&t=ffab&ia=web
+
+- Yandere:
+
+  - yandere ASMR scripts
+
+=head3 Me/My Rubber Ducky
+
+- My discord logs
+
+- My writing
+
+- My quotes.org file
+
+- Douglas Adams books
+
+- Zero Punctuation transcriptions
+
+- Izaya Orihara quotes
+
+- Hazama quotes
+
+- Terumi quotes
+
+- n-gate
+
+=head3 HN Bullshit
+
+- Hackernews comments
+
+=head2 Tech
+
+perl to munge, go to train and run
+
+- store corpus as JSON for portability, or compile directly into binary for speed?
+
+- Let us start w/ JSON
+
+Data structures:
+- hash w/ all the unique tokens as keys and an array of the token's successors as the value
+
+- array of sentences to do training on
+
+  - each sentence as an array of (overlapping) two-word arrays
+
+=head2 Training
+
+Basic training algo:
+
+grepping for unique words, finding all successors, adding to databas, then some logic for handling words not in dictionary + stopping output
+
+- unique words in text
+
+  - I can't do uniq $text[$n], but I can append them to the hash if len(h[text[n]]) == 0 (since the hash holds slices and I'm automatically putting <abend> in all of them, the zero value of the bad index will be an empty slice)
+
+- for each unique word, find all the words that follow it in the corpus and stick that in a hash along with a <abend> token
+
+  - https://go.dev/ref/spec#Map_types
+
+  - I can parallelize this on a per-token basis (each unique token gets a thread that searches (only searches) an array of pre-chopped sentences, outputting to either a global hash or to a channel that appends to the hash
+
+=head2 Running
+
+Basic usage algo:
+
+- get starting token
+
+  - maybe a dunno() w/ various "idk" responses if the word isn't in the corpus
+
+  - have all unique words as successors to bot's name OR
+
+  - activate on name and use final word in sentence OR
+
+  - activate randomly on stream using final word in msg OR something else
+
+- index into hash, rand() index into array to find next one (ending if it's <abend>)
+
+- if it wasn't <abend>, repeat with the new token
+
+=cut
