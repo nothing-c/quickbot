@@ -8,11 +8,27 @@ import (
     "fmt"
     "crypto/rand"
     "math/big"
+    "encoding/json"
 )
 
 var H map[string][]string //Hash, output to JSON
 var U []string //Unique; possibly unnecessary, but I'll keep using it for now
 var D [][]string //Data; [word1, word2] ad nausueam
+
+func dumpweights(X map[string][]string, O string) {
+    F,e:=os.OpenFile(O, os.O_RDWR|os.O_CREATE, 0644); if e!=nil { panic(e) }
+    E:=json.NewEncoder(F); E.Encode(X)
+    e=F.Close(); if e!=nil { panic(e) }
+}
+
+func pullweights(I string) map[string][]string {
+    var R map[string][]string
+    F,e:=os.Open(I); if e!=nil { panic(e) }
+    D:=json.NewDecoder(F)
+    e=D.Decode(&R); if e!=nil { panic(e) }
+    e=F.Close(); if e!=nil { panic(e) }
+    return R
+}
 
 func run(S string) string {
     if !slices.Contains(U,S) { return "<abend>" }
@@ -57,4 +73,6 @@ func main() {
         Q = run(Q)
         fmt.Println(Q)
     }
+    // Example: dumpweights(H,"weightfile.json")
+    // Example: fmt.Println(pullweights("weightfile.json"))
 }

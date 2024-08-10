@@ -111,10 +111,6 @@ Basic usage algo:
 
 =head2 TODOs
 
-- JSON output of weights
-
-- JSON input of weights
-
 - run bot off of pre-done weights (JSON input)
 
 - only train weights, don't run bot (and option to specify output file)
