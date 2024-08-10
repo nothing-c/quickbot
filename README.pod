@@ -117,7 +117,7 @@ Basic usage algo:
 
 =head2 Misc code
 
-Used to clean the test data: C<perl -pe 's/(^\w+:\s|[^\w\s])//g' .\testdata.txt > testdata-clean.txt>
+Used to clean the test data: C<perl -pe 's/(^\w+:\s|[^\w\s])//g' .\testdata.txt \> testdata-clean.txt>
 
 - Discovered some issues with query-replace-regex lol
 
