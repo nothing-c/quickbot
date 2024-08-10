@@ -111,8 +111,6 @@ Basic usage algo:
 
 =head2 TODOs
 
-- BUG 1: successors are pulling "", even though it's getting skipped for hash keys. Stop this
-
 - JSON output of weights
 
 - JSON input of weights

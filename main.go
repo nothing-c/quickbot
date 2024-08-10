@@ -1,6 +1,5 @@
 package main
 
-
 import (
     "os"
     "io"
@@ -27,13 +26,17 @@ func main() {
     I:="testnew.txt"
     F,e:=os.Open(I); if e!=nil{ panic(e) }
     C,e:=io.ReadAll(F); if e!=nil{ panic(e) }
+    var E string // Escrow
     // structural regexes could come in handy here, or bufio.ScanWords, but I /do/ want to buffer by lines
     for _,x := range strings.Split(string(C),"\n") {
         for i,y:= range strings.Split(x," ") {
             y=strings.ToLower(y) // Fix case
-            if y == "" { fmt.Println("f00!"); continue } //skip unused
-            if i != len(strings.Split(x," "))-1 { t:=strings.Split(x," ")[i:i+2]; D=append(D,t) } // BUG 1
-            if slices.Contains(U, y) { //ditto
+            if y == "" { continue } // Skip unused
+            if i != len(strings.Split(x," ")) { // Build D
+                if i != 0 { D=append(D,[]string{E,y}) } // Don't overlap sentences
+                E = y 
+            }
+            if slices.Contains(U, y) { // Skip if already found
                 continue
             } else {
                 U=append(U,y)
@@ -41,7 +44,6 @@ func main() {
             }
         }
     }
-
     for _,x := range D {
         k:=strings.ToLower(x[0]) // Key
         v:=strings.ToLower(x[1]) // Value
@@ -55,5 +57,4 @@ func main() {
         Q = run(Q)
         fmt.Println(Q)
     }
-    fmt.Println(H["so"]) // for debug purposes
 }
