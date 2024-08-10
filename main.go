@@ -21,8 +21,9 @@ func main() {
     // structural regexes could come in handy here, or bufio.ScanWords
     for _,x := range strings.Split(string(C),"\n") {
         for i,y:= range strings.Split(x," ") {
-            if i != len(strings.Split(x," "))-1 { t:=strings.Split(x," ")[i:i+2]; D=append(D,t) }
+            y=strings.ToLower(y) // Fix case
             if y == "" { continue } //skip unused
+            if i != len(strings.Split(x," "))-1 { t:=strings.Split(x," ")[i:i+2]; D=append(D,t) }
             if slices.Contains(U, y) { //ditto
                 continue
             } else {
@@ -31,8 +32,14 @@ func main() {
             }
         }
     }
+
+    for _,x := range D {
+        //We can confidently assume that all of the words here will be in H
+        H[strings.ToLower(x[0])]=append(H[strings.ToLower(x[0])],strings.ToLower(x[1]))
+    }
 //    fmt.Println(U)
-//    fmt.Println(H)
+    fmt.Println(H)
+    fmt.Println(H["so"])
 //    fmt.Println("~~~~"+U[1])
 //    fmt.Println(D)
 }
