@@ -17,7 +17,8 @@ var D [][]string //Data; [word1, word2] ad nausueam
 
 func run(S string) string {
     if !slices.Contains(U,S) { return "<abend>" }
-    n,e:=rand.Int(rand.Reader,big.NewInt(int64(len(H[S])-1))); if e!=nil{ panic(e) }
+    if len(H[S]) == 1 { return H[S][0] } // Otherwise rand.Int freaks
+    n,e:=rand.Int(rand.Reader,big.NewInt(int64(len(H[S])-1))); if e!=nil{ panic(e) } // rand is very finicky
     return H[S][n.Int64()]
 }
 
@@ -26,12 +27,12 @@ func main() {
     I:="testnew.txt"
     F,e:=os.Open(I); if e!=nil{ panic(e) }
     C,e:=io.ReadAll(F); if e!=nil{ panic(e) }
-    // structural regexes could come in handy here, or bufio.ScanWords
+    // structural regexes could come in handy here, or bufio.ScanWords, but I /do/ want to buffer by lines
     for _,x := range strings.Split(string(C),"\n") {
         for i,y:= range strings.Split(x," ") {
             y=strings.ToLower(y) // Fix case
-            if y == "" { continue } //skip unused
-            if i != len(strings.Split(x," "))-1 { t:=strings.Split(x," ")[i:i+2]; D=append(D,t) }
+            if y == "" { fmt.Println("f00!"); continue } //skip unused
+            if i != len(strings.Split(x," "))-1 { t:=strings.Split(x," ")[i:i+2]; D=append(D,t) } // BUG 1
             if slices.Contains(U, y) { //ditto
                 continue
             } else {
@@ -54,4 +55,5 @@ func main() {
         Q = run(Q)
         fmt.Println(Q)
     }
+    fmt.Println(H["so"]) // for debug purposes
 }

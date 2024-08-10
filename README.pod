@@ -109,6 +109,22 @@ Basic usage algo:
 
 - if it wasn't <abend>, repeat with the new token (done)
 
+=head2 TODOs
+
+- BUG 1: successors are pulling "", even though it's getting skipped for hash keys. Stop this
+
+- JSON output of weights
+
+- JSON input of weights
+
+- run bot off of pre-done weights (JSON input)
+
+- only train weights, don't run bot (and option to specify output file)
+
+- add weighting option for hash
+
+- specify how input files work (no punctuation, lines of sentences)
+
 =head2 Misc code
 
 Used to clean the test data: C<perl -pe 's/(^\w+:\s|[^\w\s])//g' .\testdata.txt > testdata-clean.txt>
