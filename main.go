@@ -34,12 +34,10 @@ func main() {
     }
 
     for _,x := range D {
+        k:=strings.ToLower(x[0]) // Key
+        v:=strings.ToLower(x[1]) // Value
         //We can confidently assume that all of the words here will be in H
-        H[strings.ToLower(x[0])]=append(H[strings.ToLower(x[0])],strings.ToLower(x[1]))
+        if slices.Contains(H[k], v) { continue } // I /could/ take this out and have some natural weighting occur
+        H[k]=append(H[k],v)
     }
-//    fmt.Println(U)
-    fmt.Println(H)
-    fmt.Println(H["so"])
-//    fmt.Println("~~~~"+U[1])
-//    fmt.Println(D)
 }
