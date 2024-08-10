@@ -81,7 +81,7 @@ Basic training algo:
 
 grepping for unique words, finding all successors, adding to databas, then some logic for handling words not in dictionary + stopping output
 
-- unique words in text
+- unique words in text (done)
 
   - I can't do uniq $text[$n], but I can append them to the hash if len(h[text[n]]) == 0 (since the hash holds slices and I'm automatically putting <abend> in all of them, the zero value of the bad index will be an empty slice)
 
