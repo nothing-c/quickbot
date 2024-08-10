@@ -7,11 +7,19 @@ import (
     "strings"
     "slices"
     "fmt"
+    "crypto/rand"
+    "math/big"
 )
 
-var H map[string][]string //Hash
+var H map[string][]string //Hash, output to JSON
 var U []string //Unique; possibly unnecessary, but I'll keep using it for now
 var D [][]string //Data; [word1, word2] ad nausueam
+
+func run(S string) string {
+    if !slices.Contains(U,S) { return "<abend>" }
+    n,e:=rand.Int(rand.Reader,big.NewInt(int64(len(H[S])-1))); if e!=nil{ panic(e) }
+    return H[S][n.Int64()]
+}
 
 func main() {
     H = make(map[string][]string) // Init hash
@@ -37,7 +45,13 @@ func main() {
         k:=strings.ToLower(x[0]) // Key
         v:=strings.ToLower(x[1]) // Value
         //We can confidently assume that all of the words here will be in H
-        if slices.Contains(H[k], v) { continue } // I /could/ take this out and have some natural weighting occur
+        if slices.Contains(H[k], v) { continue } // I /could/ take this out and have some natural weighting occur; maybe a cmdline option?
         H[k]=append(H[k],v)
+    }
+    Q := "so"
+    fmt.Println(Q)
+    for Q != "<abend>" {
+        Q = run(Q)
+        fmt.Println(Q)
     }
 }

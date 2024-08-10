@@ -85,7 +85,7 @@ grepping for unique words, finding all successors, adding to databas, then some 
 
   - I can't do uniq $text[$n], but I can append them to the hash if len(h[text[n]]) == 0 (since the hash holds slices and I'm automatically putting <abend> in all of them, the zero value of the bad index will be an empty slice)
 
-- for each unique word, find all the words that follow it in the corpus and stick that in a hash along with a <abend> token
+- for each unique word, find all the words that follow it in the corpus and stick that in a hash along with a <abend> token (done)
 
   - https://go.dev/ref/spec#Map_types
 
@@ -105,9 +105,9 @@ Basic usage algo:
 
   - activate randomly on stream using final word in msg OR something else
 
-- index into hash, rand() index into array to find next one (ending if it's <abend>)
+- index into hash, rand() index into array to find next one (ending if it's <abend>) (done)
 
-- if it wasn't <abend>, repeat with the new token
+- if it wasn't <abend>, repeat with the new token (done)
 
 =head2 Misc code
 
