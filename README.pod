@@ -1,14 +1,10 @@
 =pod
 
-=head1 Markov Bot Projects
+=head1 Markov Bot Projects (Quickbot)
 
 Markov bot instead of ELIZA clone (easier, faster to create)
 
-HOWTOs:
-
-- https://stackoverflow.com/questions/5306729/how-do-markov-chain-chatbots-work
-
-- https://charlesleifer.com/blog/building-markov-chain-irc-bot-python-and-redis/
+=for html <img src="mascot.jpg" alt="quickbot mascot">
 
 =head2 Themes
 
@@ -34,7 +30,7 @@ HOWTOs:
 
 - Yandere:
 
-  - yandere ASMR scripts
+  - yandere ASMR scripts(?)
 
 =head3 Me/My Rubber Ducky
 
