@@ -32,8 +32,14 @@ func pullweights(I string) map[string][]string {
     return R
 }
 
+func unique(X map[string][]string) []string {
+    var R []string
+    for k,_ := range X { R = append(R,k) }
+    return R
+}
+
 func run(S string, H map[string][]string) string {
-    if !slices.Contains(U,S) { return "<abend>" }
+    if !slices.Contains(U,S) { fmt.Println("foo"); fmt.Println(U); return "<abend>" }
     if len(H[S]) == 1 { return H[S][0] } // Otherwise rand.Int freaks
     n,e:=rand.Int(rand.Reader,big.NewInt(int64(len(H[S])-1))); if e!=nil{ panic(e) } // rand is very finicky
     return H[S][n.Int64()]
@@ -82,9 +88,7 @@ func train(I string, Up bool) {
 }
 
 func interact(L int) {
-    fmt.Println(L)
     //Not doing the full thing yet
-    fmt.Println(H)
     Q := "in";
     fmt.Println(Q)
     for Q != "<abend>" {
@@ -104,16 +108,7 @@ func main() {
     if *Oh==true { help() }
     if *Ot==true { if *Oo != "" { train(flag.Arg(0),*Ou); dumpweights(H,*Oo) } else { train(flag.Arg(0),*Ou); dumpweights(H,"weights.json") } 
         os.Exit(0)}
-    if *Or==true { if *Ow != "" { H = pullweights(*Ow); interact(*Ol) } else { H = pullweights("weightfile.json"); interact(*Ol) } 
+    if *Or==true { if *Ow != "" { H = pullweights(*Ow); U = unique(H); interact(*Ol) } else { H = pullweights("weightfile.json"); U = unique(H); interact(*Ol) } 
         os.Exit(0) }
     help()
-    // I:="testnew.txt"
-    // Q := "so"
-    // fmt.Println(Q)
-    // for Q != "<abend>" {
-    //     Q = run(Q,H)
-    //     fmt.Println(Q)
-    // }
-    // Example: dumpweights(H,"weightfile.json")
-    // Example: fmt.Println(pullweights("weightfile.json"))
 }

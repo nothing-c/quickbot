@@ -107,15 +107,7 @@ Basic usage algo:
 
 =head2 TODOs
 
-- run bot off of pre-done weights (JSON input)
-
-- only train weights, don't run bot (and option to specify output file)
-
-- add weighting option for hash
-
 - specify how input files work (no punctuation, lines of sentences)
-
-- weighted/unweighted mode; unweighted is the current one, where each unique word only appears once; weighted means that each unique word appears the # of times it appears in the corpus - make this a commandline option
 
 - % tracker during training so I can see how far it's gotten (x out of y lines)
 
