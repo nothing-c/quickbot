@@ -115,6 +115,26 @@ Basic usage algo:
 
 - specify how input files work (no punctuation, lines of sentences)
 
+- weighted/unweighted mode; unweighted is the current one, where each unique word only appears once; weighted means that each unique word appears the # of times it appears in the corpus - make this a commandline option
+
+- % tracker during training so I can see how far it's gotten (x out of y lines)
+
+=head2 Options
+
+-h: show help
+
+-t: train only (outputting to "weights.json" if the output file is not specified)
+
+-r: run only (using "weights.json" if the weight file is not specified) - read from stdin
+
+-o: specify output file
+
+-w: specify weight file
+
+-u: "unweighted" training; weights only contain distinct words, with no information about how often the occur
+
+-l: specify minimum response length
+
 =head2 Misc code
 
 Used to clean the test data: C<perl -pe 's/(^\w+:\s|[^\w\s])//g' .\testdata.txt>
