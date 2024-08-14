@@ -10,6 +10,7 @@ import (
     "math/big"
     "encoding/json"
     "flag"
+    "bufio"
 )
 
     
@@ -39,9 +40,9 @@ func unique(X map[string][]string) []string {
 }
 
 func run(S string, H map[string][]string) string {
-    if !slices.Contains(U,S) { fmt.Println("foo"); fmt.Println(U); return "<abend>" }
+    if !slices.Contains(U,S) { fmt.Printf("String %s not in dataset\n",S); return "<abend>" }
     if len(H[S]) == 1 { return H[S][0] } // Otherwise rand.Int freaks
-    n,e:=rand.Int(rand.Reader,big.NewInt(int64(len(H[S])-1))); if e!=nil{ panic(e) } // rand is very finicky
+    n,e:=rand.Int(rand.Reader,big.NewInt(int64(len(H[S])))); if e!=nil{ panic(e) } // rand is very finicky
     return H[S][n.Int64()]
 }
 
@@ -90,13 +91,14 @@ func train(I string, Up bool) {
     }
 }
 
-func interact(L int) {
-    //Not doing the full thing yet
-    Q := "in";
-    fmt.Println(Q)
-    for Q != "<abend>" {
-        Q = run(Q,H)
-        fmt.Println(Q)}
+func interact() {
+    s:=bufio.NewScanner(os.Stdin)
+    for s.Scan() {
+        I:=s.Text(); fmt.Println("    " + I)
+        Q:=run(I,H); fmt.Println("    " + Q)
+        for Q != "<abend>" {
+            Q = run(Q,H)
+            fmt.Println("    " + Q)}}
 }
 
 func main() {
@@ -105,13 +107,12 @@ func main() {
     Ow:=flag.String("w","","Specify weight file")
     Oo:=flag.String("o","","Specify output file")
     Ou:=flag.Bool("u",false,"Enable \"unweighted\" training; weights only contain distinct words, with no information about how often the occur")
-    Ol:=flag.Int("l",0,"Specify minimum response length")
     Oh:=flag.Bool("h",false,"Display this message")
     flag.Parse()
     if *Oh==true { help() }
     if *Ot==true { if *Oo != "" { train(flag.Arg(0),*Ou); dumpweights(H,*Oo) } else { train(flag.Arg(0),*Ou); dumpweights(H,"weights.json") } 
         os.Exit(0)}
-    if *Or==true { if *Ow != "" { H = pullweights(*Ow); U = unique(H); interact(*Ol) } else { H = pullweights("weightfile.json"); U = unique(H); interact(*Ol) } 
+    if *Or==true { if *Ow != "" { H = pullweights(*Ow); U = unique(H); interact() } else { H = pullweights("weightfile.json"); U = unique(H); interact() } 
         os.Exit(0) }
     help()
 }

@@ -107,7 +107,7 @@ Basic usage algo:
 
 =head2 TODOs
 
-- % tracker during training so I can see how far it's gotten (x out of y lines)
+- specify how input files work (no punctuation, lines of sentences)
 
 =head2 Options
 
