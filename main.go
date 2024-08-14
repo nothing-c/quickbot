@@ -58,6 +58,7 @@ func help () {
 
 func train(I string, Up bool) {
     var E string // Escrow
+    c:=0 // Count
     H = make(map[string][]string) // Init hash
     F,e:=os.Open(I); if e!=nil{ panic(e) }
     C,e:=io.ReadAll(F); if e!=nil{ panic(e) }
@@ -77,6 +78,8 @@ func train(I string, Up bool) {
                 H[y]=[]string{"<abend>"}
             }
         }
+        c++
+        fmt.Printf("%d lines processed\n",c)
     }
     for _,x := range D {
         k:=strings.ToLower(x[0]) // Key
