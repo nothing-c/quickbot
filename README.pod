@@ -56,58 +56,11 @@ Markov bot instead of ELIZA clone (easier, faster to create)
 
 - Hackernews comments
 
-=head2 Tech
-
-perl to munge, go to train and run
-
-- store corpus as JSON for portability, or compile directly into binary for speed?
-
-- Let us start w/ JSON
-
-Data structures:
-- hash w/ all the unique tokens as keys and an array of the token's successors as the value
-
-- array of sentences to do training on
-
-  - each sentence as an array of (overlapping) two-word arrays
-
-=head2 Training
-
-Basic training algo:
-
-grepping for unique words, finding all successors, adding to databas, then some logic for handling words not in dictionary + stopping output
-
-- unique words in text (done)
-
-  - I can't do uniq $text[$n], but I can append them to the hash if len(h[text[n]]) == 0 (since the hash holds slices and I'm automatically putting <abend> in all of them, the zero value of the bad index will be an empty slice)
-
-- for each unique word, find all the words that follow it in the corpus and stick that in a hash along with a <abend> token (done)
-
-  - https://go.dev/ref/spec#Map_types
-
-  - I can parallelize this on a per-token basis (each unique token gets a thread that searches (only searches) an array of pre-chopped sentences, outputting to either a global hash or to a channel that appends to the hash
-
-=head2 Running
-
-Basic usage algo:
-
-- get starting token
-
-  - maybe a dunno() w/ various "idk" responses if the word isn't in the corpus
-
-  - have all unique words as successors to bot's name OR
-
-  - activate on name and use final word in sentence OR
-
-  - activate randomly on stream using final word in msg OR something else
-
-- index into hash, rand() index into array to find next one (ending if it's <abend>) (done)
-
-- if it wasn't <abend>, repeat with the new token (done)
-
 =head2 TODOs
 
 - specify how input files work (no punctuation, lines of sentences)
+
+- discuss why interact() only does single-word input
 
 =head2 Options
 
@@ -125,10 +78,27 @@ Basic usage algo:
 
 -l: specify minimum response length
 
-=head2 Misc code
+=head2 Activation
 
-Used to clean the test data: C<perl -pe 's/(^\w+:\s|[^\w\s])//g' .\testdata.txt>
+Right now, quickbot I<only> handles single-word activation functions, and only ever will, as far as I can see. 
+Why? 
+Because there're a million ways to run a markov bot, and I don't want to handle all of them.
+Use another script that munges the incoming message and pipes in or something. 
+It'll be easier.
+In the meantime, here are some ways of running it (IRC-style) that I though of:
 
-- Discovered some issues with query-replace-regex lol
+=over
+
+=item Use the last word in the input
+
+=item Use the first/last word in the input that's in the vocab
+
+=item Use a random word from the input that's in the vocab
+
+=item Use a word that's in vocab and has the most associated words
+
+=item Do multiple sentences using each word in vocab
+
+=back
 
 =cut
